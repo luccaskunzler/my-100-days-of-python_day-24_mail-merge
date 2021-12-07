@@ -1,24 +1,14 @@
-clear_lines = []
-with open("./Input/Letters/starting_letter.txt", "r") as letter:
-    lines = letter.readlines()
-    for line in lines:
-        new_line = line.strip("\n")
-        clear_lines.append(new_line)
-    print(clear_lines)
+# opens the sample letter
+with open("./Input/Letters/starting_letter.txt", "r") as sample_letter:
+    letter = sample_letter.read()
 
-clear_list_of_guests = []
+# opens the guest list and creates a list with the individual names.
 with open("./Input/Names/invited_names.txt") as guests:
     list_of_guests = guests.readlines()
-    for line in list_of_guests:
-        new_line = line.strip("\n")
-        clear_list_of_guests.append(new_line)
-    print(clear_list_of_guests)
-    print(len(list_of_guests))
-
-for i in range(0,len(list_of_guests)):
-    with open(f'./Output/ReadyToSend/{clear_list_of_guests[i]}.txt', 'w') as individual_letter:
-        new_string = clear_lines[0].replace("[name]", clear_list_of_guests[i])
-        individual_letter.write(new_string)
-        for _ in range(1,len(clear_lines)):
-            individual_letter.write("\n ")
-            individual_letter.write(clear_lines[_])
+    for guest in list_of_guests:
+        # for every guest name, strip can be used to remove unwanted characters
+        stripped_name = guest.strip()
+        # individually creates the invitations
+        with open(f'./Output/ReadyToSend/{stripped_name}.txt', 'w') as final_letter:
+            new_string = letter.replace("[name]", stripped_name)
+            final_letter.write(new_string)
